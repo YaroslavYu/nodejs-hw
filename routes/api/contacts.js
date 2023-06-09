@@ -1,9 +1,11 @@
 const express = require("express");
 
+const { authenticate } = require("../../middlewares");
+const { contactsController } = require("../../controllers");
+
 const router = express.Router();
 
-// const contactsController = require("../../controllers/contacts-controller");
-const contactsController = require("../../controllers");
+router.use(authenticate);
 
 router.get("/", contactsController.getListContacts);
 
