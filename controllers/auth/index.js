@@ -5,6 +5,7 @@ const login = require("./login");
 const logout = require("./logout");
 const current = require("./current");
 const updateSubscribe = require("./updateSubscribe");
+const updateAvatar = require("./updateAvatar");
 
 module.exports = {
   register: controllerWrapper(register),
@@ -12,4 +13,5 @@ module.exports = {
   logout: controllerWrapper(logout),
   current: controllerWrapper(current),
   updateSubscribe: controllerWrapper(updateSubscribe),
+  updateAvatar: controllerWrapper(updateAvatar),
 };
