@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
+const bcrypt = require("bcrypt");
+const { User } = require("../../models");
 
 const app = require("../../app");
 const { DB_HOST_TEST } = process.env;
@@ -9,9 +11,19 @@ describe("login app test", () => {
   beforeAll(async () => {
     server = app.listen(3000);
     await mongoose.connect(DB_HOST_TEST);
+
+    const hashedPassword = await bcrypt.hash("123456", 10);
+    await User.create({
+      email: "test@mail.com",
+      password: hashedPassword,
+      verificationToken: null,
+      verify: true,
+    });
   });
 
   afterAll(async () => {
+    await User.findOneAndDelete({ email: "test@mail.com" });
+
     server.close();
     await mongoose.connection.close();
   });
