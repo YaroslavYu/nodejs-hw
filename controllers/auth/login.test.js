@@ -8,24 +8,27 @@ const { DB_HOST_TEST } = process.env;
 
 describe("login app test", () => {
   let server = null;
+
   beforeAll(async () => {
     server = app.listen(3000);
+
     await mongoose.connect(DB_HOST_TEST);
 
     const hashedPassword = await bcrypt.hash("123456", 10);
     await User.create({
       email: "test@mail.com",
       password: hashedPassword,
-      verificationToken: null,
+      verificationToken: "verify_token",
       verify: true,
+      subscription: "starter",
     });
   });
 
   afterAll(async () => {
-    await User.findOneAndDelete({ email: "test@mail.com" });
+    await User.deleteOne({ email: "test@mail.com" });
 
     server.close();
-    await mongoose.connection.close();
+    await mongoose.disconnect();
   });
 
   it("should respond with status code 200", async () => {
