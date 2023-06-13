@@ -21,6 +21,7 @@ const userSchema = new Schema(
       default: "starter",
     },
     token: String,
+    avatarURL: String,
   },
   { versionKey: false, timestamps: true }
 );
@@ -41,4 +42,8 @@ const updateSubscribeSchema = Joi.object({
 
 const User = model("user", userSchema);
 
-module.exports = { User, signInSchema, updateSubscribeSchema };
+module.exports = {
+  User,
+  signInSchema,
+  updateSubscribeSchema,
+};
